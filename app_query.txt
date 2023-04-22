@@ -1,0 +1,40 @@
+SELECT * FROM afiliados a join empresas e 
+on a.id_estado = e.id_estado
+where a.id_estado = 2 and e.id_estado = 2;
+
+
+
+UPDATE afiliados SET id_estado = 1 WHERE id_estado = 2 and empresas.id_estado = 2;
+
+ a.doc_titular AS dt, b.doc AS docum
+
+
+
+
+
+
+SELECT a.doc_titular, b.doc FROM afiliados AS a INNER JOIN afiliados AS b ON a.doc_titular = b.doc group by b.doc order DESC
+
+SELECT a.doc_titular, b.doc FROM afiliados AS a left JOIN afiliados AS b ON a.doc_titular = b.doc where b.doc is not null;
+
+
+SELECT * FROM `afiliados` WHERE id_estado = 2 and (doc_titular BETWEEN 9999 and 99999999)
+
+______________________________________
+
+esto funciona :
+primero hay que sacar el listado de las empresas suspendidas  
+
+UPDATE afiliados SET id_estado = 1 WHERE id_estado = 2 and doc_titular is not null
+
+ahora suspendo las empresas por recheckeo :
+
+UPDATE `empresas`
+SET id_estado = 1
+WHERE id IN ( id de las empresas actualenmnte suspendias.
+)
+
+
+SELECT a.nombre,a.apellido, a.doc_titular AS familiar, b.doc AS documento FROM afiliados AS a INNER JOIN afiliados AS b WHERE a.doc_titular = b.doc
+
+SELECT a.nombre,a.apellido, a.doc_titular, a.doc FROM afiliados AS a INNER JOIN afiliados AS b WHERE a.doc_titular = b.doc
