@@ -1,7 +1,5 @@
-pandas 1.5.3
+pandas==1.5.3
 numpy
 xlwt
 xlrd
-tkinter
-tkinter
 customtkinter
