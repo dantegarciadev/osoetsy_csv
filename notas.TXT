@@ -1,0 +1,18 @@
+corregir errores de repositorio :
+documentacion:
+https://mkyong.com/git/unable-to-resolve-reference-refs-remotes-origin-master-reference-broken/#:~:text=Solution%20Unsure%20the%20root%20cause%20of%20the%20%22reference,file.git%2Frefs%2Fremotes%2Forigin%2Fmaster%2C%20and%20git%20fetch%20to%20retrieve%20it%20back.
+
+
+fatal: bad object refs/remotes/origin/master
+error: https://github.com/dantegarciadev/osoetsy_csv.git did not send all necessary objects
+
+
+$ rm .git/refs/remotes/origin/master
+
+$ git fetch
+
+ From bitbucket.org:xx/mkyong-tutorials
+    df0eee8..3f7af90  master     -> origin/master
+
+$ git pull
+ Already up to date.
