@@ -12,6 +12,7 @@ import pandas as pd
 def seleccionar_archivo():
     root = tk.Tk()
     root.withdraw()
+    root.attributes('-topmost', True)
     file_path = filedialog.askopenfile()
     return file_path
 
