@@ -5,6 +5,9 @@ import customtkinter as ctk
 from customtkinter import filedialog
 from datetime import datetime
 import pandas as pd
+import dbfread
+import glob
+from pandastable import Table, TableModel # Importar clases de pandastable
 
 
 
@@ -35,3 +38,27 @@ def transformar_fecha2(fecha):
    # df[columna] = df[columna].dt.strftime("%d-%m-%Y")
     #return df
     
+    
+    
+def subir_dbf():
+    archivo = None
+    root = tk.Tk()
+    root.withdraw()
+    root.attributes('-topmost', True)
+    print(archivo)
+    while True:
+        archivo = filedialog.askopenfile()
+        if archivo:
+            ruta_archivo = archivo.name
+            try:
+                dbf =  dbfread.DBF( ruta_archivo )
+                liquidacion = pd.DataFrame(dbf)
+                #indicadores = pd.read_excel(ruta_archivo, engine='openpyxl')
+                #padron = pd.read_csv(archivo, sep=";", encoding="ISO-8859-1")
+            
+                break
+            except UnicodeDecodeError:
+                print("Error de decodificación de caracteres. Intenta con otra codificación o archivo.")
+                continue
+    else:
+            print("Archivo incorrecto. Por favor, vuelva a cargarlo.")
