@@ -41,24 +41,25 @@ def transformar_fecha2(fecha):
     
     
 def subir_dbf():
-    archivo = None
-    root = tk.Tk()
-    root.withdraw()
-    root.attributes('-topmost', True)
-    print(archivo)
-    while True:
-        archivo = filedialog.askopenfile()
-        if archivo:
-            ruta_archivo = archivo.name
+    file_path = None # Inicializar la variable file_path
+    liquidacion = None # Inicializar la variable liquidacion
+    continuar = True # Crear una variable booleana para controlar el bucle
+    while continuar: # Usar la variable continuar como condición del bucle
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes('-topmost', True)
+        file_path = filedialog.askopenfilename() # Usar el método askopenfilename para obtener la ruta del archivo
+        print(file_path) # Imprimir la ruta del archivo
+        if file_path and file_path.endswith('.DBF'): # Comprobar si se ha seleccionado un archivo dbf válido
             try:
-                dbf =  dbfread.DBF( ruta_archivo )
-                liquidacion = pd.DataFrame(dbf)
-                #indicadores = pd.read_excel(ruta_archivo, engine='openpyxl')
-                #padron = pd.read_csv(archivo, sep=";", encoding="ISO-8859-1")
-            
-                break
-            except UnicodeDecodeError:
-                print("Error de decodificación de caracteres. Intenta con otra codificación o archivo.")
-                continue
-    else:
-            print("Archivo incorrecto. Por favor, vuelva a cargarlo.")
+                dbf =  dbfread.DBF(file_path) # Leer el archivo dbf con dbfread
+                liquidacion = pd.DataFrame(dbf) # Crear el dataframe con pandas
+                print(liquidacion) # Imprimir el dataframe
+                continuar = False # Cambiar la variable continuar a False para salir del bucle
+            except (UnicodeDecodeError, FileNotFoundError, PermissionError, ValueError) as e: # Capturar varias excepciones posibles al leer el archivo dbf
+                print(f"Error al leer el archivo dbf: {e}. Intenta con otro archivo o codificación.")
+                continuar = True # Mantener la variable continuar en True para repetir el bucle
+        else: # Si no se ha seleccionado un archivo dbf válido
+            print("Archivo incorrecto. Por favor, vuelve a cargarlo o cancela la operación.")
+            continuar = True # Mantener la variable continuar en True para repetir el bucle
+    return liquidacion # Devolver el dataframe creado con pandas al final de la función
