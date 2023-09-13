@@ -65,7 +65,7 @@ def subir_dbf():
 def merge_dfs():
     global merge_filtrado # Variable global para almacenar el dataframe resultante del merge
     df_merge = pd.merge(df_final, liquidacion, how='left', left_on='ben_id', right_on='BEN_ID') # Hacer el merge left por la columna BEN_ID
-    merge_filtrado = df_merge[['OS_NOMBRE','os_nombre','area','ori_nom','ord_fec', 'importe','pre_nom','nombreafi','nom_nom','concepto', ]]
+    merge_filtrado = df_merge[['OS_NOMBRE','os_nombre','ori_nom','ori_nom','ord_fec', 'it_cod','importe','nombreafi','nom_nom' ]]
     print(df_merge) # Imprimir el dataframe resultante
 
 # Crear función para separar el dataframe resultante por la columna convenio
@@ -103,7 +103,7 @@ def save_dfs():
 
 # Crear interfaz gráfica
 window = tk.Tk() # Crear ventana principal
-window.title("Unir archivos excel") # Asignar título a la ventana
+window.title("Procesar Liquidaciones") # Asignar título a la ventana
 window.geometry("800x600") # Ancho 800, alto calculado
 
 
@@ -116,19 +116,19 @@ btn_select = tk.Button(window, text="Seleccionar liquidaciones", command=lambda:
 btn_select.pack() # Colocar el botón en la ventana
 
 # Crear botón para mostrar dataframe con pandastable
-btn_show = tk.Button(window, text="Mostrar dataframe", command=show_df)
+btn_show = tk.Button(window, text="Mostrar liquidacion armada(opcinal)", command=show_df)
 btn_show.pack() # Colocar el botón en la ventana
 
 # Crear botón para seleccionar padrón DBF
 btn_select = tk.Button(window, text="Seleccionar padrón", command= lambda:subir_dbf())
 btn_select.pack() # Colocar el botón en la ventana
 
-btn_process = tk.Button(window, text="Procesar archivos", command=lambda:[merge_dfs(), split_dfs(), tk.messagebox.showinfo
-("Proceso completado", "Los archivos se han procesado correctamente")])
-btn_process.pack()
+#btn_process = tk.Button(window, text="Procesar archivos", command=lambda:[merge_dfs(), split_dfs(), tk.messagebox.showinfo
+#("Proceso completado", "Los archivos se han procesado correctamente")])
+#btn_process.pack()
 
 # Crear botón para llamar a las funciones anteriores y mostrar un mensaje
-btn_save = tk.Button(window, text="Guardar dataframes", command=lambda:[select_folder(), save_dfs(), tk.messagebox.showinfo("Guardado completado", "Los dataframes se han guardado correctamente")])
+btn_save = tk.Button(window, text="procesar y Guardar convenios", command=lambda:[merge_dfs(), split_dfs(),select_folder(), save_dfs(), tk.messagebox.showinfo("Archivos Procesados y guardados correctamente","Archivos Procesados y guardados correctamente" )])
 btn_save.pack()
 
 window.mainloop() # Iniciar el bucle principal de la ventana
