@@ -27,7 +27,7 @@ def read_files():
     df_list = [] # Crear lista vacía
     for file in files: # Iterar sobre cada archivo
         df = pd.read_excel(file) # Leer el archivo y saltar la primera fila
-        nombre = file.split("/")[-1].split(".")[0] # Extraer el nombre del archivo sin la extensión
+        nombre = 'FC ' + file.split("/")[-1].split(".")[0] # Extraer el nombre del archivo sin la extensión
         df["Facturas"] = nombre # Crear una nueva columna con el nombre del archivo
         df_list.append(df) # Añadir el dataframe a la lista
     print(df_list) # Imprimir la lista de dataframes
@@ -67,7 +67,7 @@ def subir_dbf():
 def merge_dfs():
     global merge_filtrado # Variable global para almacenar el dataframe resultante del merge
     df_merge = pd.merge(df_final, liquidacion, how='left', left_on='ben_id', right_on='BEN_ID') # Hacer el merge left por la columna BEN_ID
-    merge_filtrado = df_merge[['OS_NOMBRE','os_nombre','ori_nom','ori_nom','ord_fec', 'it_cod','importe','nombreafi','nom_nom','Facturas' ]]
+    merge_filtrado = df_merge[['Facturas','OS_NOMBRE','os_nombre','ori_nom','ord_fec', 'it_cod','importe','nombreafi','nom_nom' ]]
     print(df_merge) # Imprimir el dataframe resultante
 
 # Crear función para separar el dataframe resultante por la columna convenio
