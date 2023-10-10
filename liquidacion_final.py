@@ -91,6 +91,28 @@ def select_folder():
     folder = filedialog.askdirectory() # Mostrar el diálogo para seleccionar la carpeta
     print(folder) # Imprimir la ruta de la carpeta
 
+# Crear funcion para unir los diferentes archiovos de excel
+def seleccionar_excels():
+    global excel_lista_archivos # la definimos como global para guardar para usarla en la funcion "save_excel_final"
+    # creamos una lista vacia para guardar las direcciones de los archivos de excel
+    excel_lista_archivos=[]
+    # usamos el bucle while para que la ventana siga abriendose hasta que se cancele la seleccion
+    while True:
+        # usamos el widget filedialog.askopenfilename() para obtener el nombre y la direccion de excel
+        excel_archivos = filedialog.askopenfilename(title="Selecciona un archivo de Excel", filetypes=("archivos excel",".xlsx"))
+        # Si se cancela la seleccion el bucle se rompe
+        if excel_archivos == "":
+            break
+        # Mientras siga, se va agregando la lista de direcciones de archivos a las lista  excel_lista_archivos=[]
+        else:
+            excel_lista_archivos.append(excel_archivos)
+    
+def save_excel_final():
+    convenio_final = excel_lista_archivos[]
+
+
+
+
 # Crear función para guardar cada dataframe en un archivo excel con el nombre del convenio
 def save_dfs():
     for df in dfs: # Iterar sobre la lista de dataframes
@@ -133,4 +155,9 @@ btn_select.pack() # Colocar el botón en la ventana
 btn_save = tk.Button(window, text="procesar y Guardar convenios", command=lambda:[merge_dfs(), split_dfs(),select_folder(), save_dfs(), tk.messagebox.showinfo("Archivos Procesados y guardados correctamente","Archivos Procesados y guardados correctamente" )])
 btn_save.pack()
 
+#Crear boton para unir los archivos creados de convenios desde varios directorios .
+btn_save = tk.Button(window, text="Unir Archivos", command=lambda:[seleccionar_excels(), tk.messagebox.showinfo("ARchivos unicos correctamente" )])
+btn_save.pack()
+
+# Guardar el archivo final_
 window.mainloop() # Iniciar el bucle principal de la ventana
