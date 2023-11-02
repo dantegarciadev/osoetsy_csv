@@ -23,10 +23,10 @@ def seleccionar_archivo():
 
 
 def transformar_fecha2(fecha):
-    patrones = ["%d-%m-%Y", "%d%m%Y", "%Y-%m-%d", "%d-%B-%Y","%d/%m/%Y %H:%M:%S","%Y-%m-%d %H:%M:%S" ]
+    patrones = ["%d-%m-%Y", "%Y-%m-%d","%d/%m/%Y", "%d-%m-%Y","%d/%m/%Y %H:%M:%S","%Y-%m-%d %H:%M:%S"]
     for patron in patrones:
         try:
-            fecha_transformada = datetime.strptime(fecha, patron).strftime("%d-%m-%Y")
+            fecha_transformada = datetime.strptime(fecha, patron).strftime("%d/%m/%Y")
             return fecha_transformada
         except ValueError:
             pass
