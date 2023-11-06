@@ -12,6 +12,15 @@ from pandastable import Table, TableModel # Importar clases de pandastable
 
 
 
+
+def seleccionar_directorio():
+    root = tk.Tk()
+    root.withdraw()
+    root.attributes('-topmost', True)
+    path_f = filedialog.askdirectory()
+    return path_f
+
+
 def seleccionar_archivo():
     root = tk.Tk()
     root.withdraw()
