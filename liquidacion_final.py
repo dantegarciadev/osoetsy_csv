@@ -10,7 +10,7 @@ import openpyxl
 import dbfread
 import glob
 from pandastable import Table, TableModel # Importar clases de pandastable
-
+import datetime
 
 
 liquidacion = None 
@@ -106,9 +106,54 @@ def seleccionar_excels():
         # Mientras siga, se va agregando la lista de direcciones de archivos a las lista  excel_lista_archivos=[]
         else:
             excel_lista_archivos.append(excel_archivos)
+
+# Crear una funcion para unir los archvos guardados en en la lista "taxcel_lista_archivos"
+def juntar_archivos_exel(excel_lista_archivos):
+    # usa la variable global df_unido
+    global df_unido
+    # creo un dataframe vacio y le asigno la variable df_unido
+    df_unido = pd.DataFrame()
+    # recorremos la lista "excel_lista_archivos" de Excel
+    for excel_archivos in excel_lista_archivos:
+        # leemos la lista excel_lista_archivos y agregamos al dataframe con append()
+        df1 = pd.read_excel(excel_archivos)
+        df_unido = df_unido.append(df1)
+        print(df_unido)
+        # mostramos mensaje indicando que se completo el proceso
+    tk.messagebox.showinfo(title="Proceso Completado", message="Se creo el archivo con todos los Excels seleccionados")
+
+
+# Funcion para guardar el dataframe en un archivo excel
+def guardar_excel_final():
+    # usar la variable global df_unido
+    global df_unido
+    global nombre_final
+    #tomar la hora 
+    ahora = datetime.datetime.now()
+    # Formatear la fecha y hora como una cadena con el formato "aaaa-mm-dd hh:mm:ss"
+    fecha = ahora.strftime("%Y-%m-%d %H-%M-%S")
+
+    # revisa si el dataframe esta vacio
+    if df_unido is None or df_unido.empty:
+        # si esta vacio va a mostrar el mensaje "no hay datos para guardar"
+        tk.messagebox.showerror(title="Error", message="No hay datos para guardar. Selecciona primero los archivos de Excel que quieres unir.")
+    else:
+        # si esta vacio usa el widget filedialog.asksaveasfilename() para obtener la ruta y el nombre del archivo a guardar
+        excel_final = filedialog.askdirectory(title="guardar excel final")
+        nombre = df_unido.iloc[2, df_unido.columns.get_loc("OS_NOMBRE")]
+        nombre_final = excel_final + "/" + nombre + "_final " + fecha + ".xlsx"
+        if excel_final == "":
+            # si se cancelo no hace nada
+            pass
+        else:
+            # si no se cancelo, uso un try-excep para manejar los errores
+            try:
+                df_unido.to_excel(nombre_final, index = False)
+                tk.messagebox.showinfo(title="Archivo guardado", message=f"Se ha guardado el archivo '{nombre}'")
+            except Exception as e:
+                # si ocurre un error, muestra el mensaje con el tipo de error
+                tk.messagebox.showerror(title="Error", message=f"ha ocurrido un error al guardar el archivo: {e}")
     
-def save_excel_final():
-    convenio_final = excel_lista_archivos[]
 
 
 
@@ -155,9 +200,13 @@ btn_select.pack() # Colocar el botón en la ventana
 btn_save = tk.Button(window, text="procesar y Guardar convenios", command=lambda:[merge_dfs(), split_dfs(),select_folder(), save_dfs(), tk.messagebox.showinfo("Archivos Procesados y guardados correctamente","Archivos Procesados y guardados correctamente" )])
 btn_save.pack()
 
+
 #Crear boton para unir los archivos creados de convenios desde varios directorios .
-btn_save = tk.Button(window, text="Unir Archivos", command=lambda:[seleccionar_excels(), tk.messagebox.showinfo("ARchivos unicos correctamente" )])
+btn_save = tk.Button(window, text="Unir Archivos", command=lambda:[seleccionar_excels(), tk.messagebox.showinfo(title="ARchivos unidos correctamente", message="Archivos Unidos" )])
 btn_save.pack()
 
+
+btn_save = tk.Button(window, text="Guardar Archivos", command=lambda:[juntar_archivos_exel(excel_lista_archivos),guardar_excel_final(), tk.messagebox.showinfo(title="excel_guardado", message= "El archivo se guardo en la Carpeta seleccionada")])
+btn_save.pack()
 # Guardar el archivo final_
 window.mainloop() # Iniciar el bucle principal de la ventana

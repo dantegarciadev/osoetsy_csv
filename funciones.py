@@ -12,6 +12,15 @@ from pandastable import Table, TableModel # Importar clases de pandastable
 
 
 
+
+def seleccionar_directorio():
+    root = tk.Tk()
+    root.withdraw()
+    root.attributes('-topmost', True)
+    path_f = filedialog.askdirectory()
+    return path_f
+
+
 def seleccionar_archivo():
     root = tk.Tk()
     root.withdraw()
@@ -23,10 +32,10 @@ def seleccionar_archivo():
 
 
 def transformar_fecha2(fecha):
-    patrones = ["%d-%m-%Y", "%d%m%Y", "%Y-%m-%d", "%d-%B-%Y","%d/%m/%Y %H:%M:%S","%Y-%m-%d %H:%M:%S" ]
+    patrones = ["%d-%m-%Y", "%Y-%m-%d","%d/%m/%Y", "%d-%m-%Y","%d/%m/%Y %H:%M:%S","%Y-%m-%d %H:%M:%S"]
     for patron in patrones:
         try:
-            fecha_transformada = datetime.strptime(fecha, patron).strftime("%d-%m-%Y")
+            fecha_transformada = datetime.strptime(fecha, patron).strftime("%d/%m/%Y")
             return fecha_transformada
         except ValueError:
             pass
