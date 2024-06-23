@@ -1,0 +1,4 @@
+{
+    "json.schemas": [],
+    "python.analysis.extraPaths": ["${workspaceFolder}/../librerias"]
+}
