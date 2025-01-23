@@ -35,7 +35,7 @@ async def obtener_datos(session, documento):
 async def main():
     global df_principal
     async with aiohttp.ClientSession() as session:
-        tasks = [obtener_datos(session, doc) for doc in range(33605892, 33705892)]
+        tasks = [obtener_datos(session, doc) for doc in range(33605892, 33655892)]
         results = await asyncio.gather(*tasks)
         df_principal = pd.concat(results, ignore_index=True)
 
